@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 const Navegacion = () => {
     return <div>
         { /* Seccion Tabs  */ }
@@ -8,9 +10,9 @@ const Navegacion = () => {
             </a>
             </li>
             <li className="nav-item">
-            <a className="nav-link" href="#">
-                Terminadas
-            </a>
+                <Link className="nav-link" to="/historico">
+                    Histórico
+                </Link>
             </li>
         </ul>
     </div>

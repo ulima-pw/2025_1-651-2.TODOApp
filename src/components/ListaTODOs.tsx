@@ -5,6 +5,7 @@ export interface TODO {
 
 interface ListaTODOsProps {
     todos : TODO[]
+    esHistorico : boolean
 }
 
 const ListaTODOs = (props : ListaTODOsProps) => {
@@ -17,7 +18,17 @@ const ListaTODOs = (props : ListaTODOsProps) => {
                         <div className="ms-2 me-auto">
                             { elemento.descripcion }
                         </div>
-                        <input className="form-check-input" type="checkbox" />
+                        {
+                            //props.esHistorico ? "" : <input className="form-check-input" type="checkbox" />
+                        }
+                        {
+                            (() => {
+                                if (!props.esHistorico) {
+                                    return <input className="form-check-input" type="checkbox" />
+                                }
+                            })()
+                        }
+                        
                     </li>
                 })
             }

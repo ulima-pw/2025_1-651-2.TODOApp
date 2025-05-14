@@ -17,7 +17,7 @@ const MainPage = () => {
     }
 
     return <div className="container">
-        <Titulo texto="TODO App"/>
+        <Titulo texto="TODO App" pagina={ Pagina.Main }/>
         <Navegacion pagina={ Pagina.Main } />
         <Formulario agregar={ agregarTODO }/>
         <ListaTODOs todos={ listaTODOs } 

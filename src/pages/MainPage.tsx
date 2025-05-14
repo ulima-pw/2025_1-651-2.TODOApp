@@ -5,7 +5,16 @@ import Navegacion, { Pagina } from "../components/Navegacion"
 import Titulo from "../components/Titulo"
 
 const MainPage = () => {
-    const [listaTODOs, setListaTODOs  ] = useState<TODO[]>([])
+    const listaPersistenteStr = localStorage.getItem("TODOS")
+    let listaPersistente : TODO[]
+    if (listaPersistenteStr == null) {
+        listaPersistente = []
+    } else {
+        listaPersistente = JSON.parse(listaPersistenteStr)
+    }
+
+    const [listaTODOs, setListaTODOs  ] = useState<TODO[]>(listaPersistente)
+
 
     const agregarTODO = (texto : string) => {
         console.log("aca")

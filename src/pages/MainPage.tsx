@@ -28,17 +28,28 @@ const MainPage = () => {
         }
     }
 
+    const httpGuardarTODO = async (todo : TODO) => {
+        const resp = await fetch(URL, {
+            method : "post",
+            body : JSON.stringify(todo)
+        })
+        const data = await resp.json()
+    }
+
     useEffect(() => {
         httpObtenerTODOsAsyncAwait()
     }, [])
 
     const agregarTODO = (texto : string) => {
         console.log("aca")
+        httpGuardarTODO({
+            id : listaTODOs.length + 1,
+            descripcion : texto
+        })
         listaTODOs.push({
             id : listaTODOs.length + 1,
             descripcion : texto
         })
-        sessionStorage.setItem("TODOS", JSON.stringify(listaTODOs))
         setListaTODOs([...listaTODOs])
     }
 

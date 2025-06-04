@@ -4,24 +4,15 @@ import ListaTODOs, { type TODO } from "../components/ListaTODOs"
 import Navegacion, { Pagina } from "../components/Navegacion"
 import Titulo from "../components/Titulo"
 
-const URL = "https://script.google.com/macros/s/AKfycbxR06kwYzBmVIy9NoLCq1ddnLj4PIT9uGvPNiK_I5aAob7qrYUs-Q7XPfLab3Lk1ZD9KQ/exec"
+const URL = "http://localhost:5000"
 
 const MainPage = () => {
-    /*const listaPersistenteStr = sessionStorage.getItem("TODOS")
-    let listaPersistente : TODO[]
-    if (listaPersistenteStr == null) {
-        listaPersistente = []
-    } else {
-        listaPersistente = JSON.parse(listaPersistenteStr)
-    }*/
-
     const [listaTODOs, setListaTODOs  ] = useState<TODO[]>([])
 
     const httpObtenerTODOsAsyncAwait = async () => {
         try {
-            const resp = await fetch(URL)
+            const resp = await fetch(`${URL}/todos`)
             const data = await resp.json()
-            console.log(data)
             setListaTODOs(data)
         }catch(error) {
             console.error(error)
@@ -29,9 +20,12 @@ const MainPage = () => {
     }
 
     const httpGuardarTODO = async (todo : TODO) => {
-        const resp = await fetch(URL, {
+        const resp = await fetch(`${URL}/todos`, {
             method : "post",
-            body : JSON.stringify(todo)
+            body : JSON.stringify(todo),
+            headers : {
+                "content-type" : "application/json"
+            }
         })
         const data = await resp.json()
     }
@@ -40,17 +34,11 @@ const MainPage = () => {
         httpObtenerTODOsAsyncAwait()
     }, [])
 
-    const agregarTODO = (texto : string) => {
-        console.log("aca")
-        httpGuardarTODO({
-            id : listaTODOs.length + 1,
+    const agregarTODO = async (texto : string) => {
+        await httpGuardarTODO({
             descripcion : texto
         })
-        listaTODOs.push({
-            id : listaTODOs.length + 1,
-            descripcion : texto
-        })
-        setListaTODOs([...listaTODOs])
+        await httpObtenerTODOsAsyncAwait()
     }
 
     return <div className="container">

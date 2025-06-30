@@ -9,7 +9,7 @@ const URL = "http://localhost:5000"
 
 export interface Category {
     id: number
-    name: string
+    nombre: string
 }
 
 const MainPage = () => {
@@ -39,8 +39,19 @@ const MainPage = () => {
     }
 
     const httpObtenerCategoriasAsyncAwait = async () => {
+        if (!sessionStorage.getItem("USUARIO")) {
+            navigate("/")
+            return
+        }
+
+        const usuario = JSON.parse(sessionStorage.getItem("USUARIO")!)
+
         try {
-            const resp = await fetch(`${URL}/categories`)
+            const resp = await fetch(`${URL}/categorias`, {
+                headers : {
+                    "usuarioid" : usuario.id
+                }
+            })
             const data = await resp.json()
             setCategories(data)
         }catch(error) {
@@ -61,7 +72,7 @@ const MainPage = () => {
 
     useEffect(() => {
         httpObtenerTODOsAsyncAwait()
-        //httpObtenerCategoriasAsyncAwait()
+        httpObtenerCategoriasAsyncAwait()
     }, [])
 
     const agregarTODO = async (texto : string) => {

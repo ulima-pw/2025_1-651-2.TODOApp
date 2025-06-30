@@ -3,6 +3,7 @@ import Formulario from "../components/Formulario"
 import ListaTODOs, { type TODO } from "../components/ListaTODOs"
 import Navegacion, { Pagina } from "../components/Navegacion"
 import Titulo from "../components/Titulo"
+import { useNavigate } from "react-router-dom"
 
 const URL = "http://localhost:5000"
 
@@ -15,9 +16,21 @@ const MainPage = () => {
     const [listaTODOs, setListaTODOs  ] = useState<TODO[]>([])
     const [categories, setCategories] = useState<Category[]>([])
 
+    const navigate = useNavigate()
+
     const httpObtenerTODOsAsyncAwait = async () => {
+        if (!sessionStorage.getItem("USUARIO")) {
+            navigate("/")
+            return
+        }
+
+        const usuario = JSON.parse(sessionStorage.getItem("USUARIO")!)
         try {
-            const resp = await fetch(`${URL}/todos`)
+            const resp = await fetch(`${URL}/todos`,{
+                headers : {
+                    "usuarioid" : usuario.id
+                }
+            })
             const data = await resp.json()
             setListaTODOs(data)
         }catch(error) {
@@ -48,7 +61,7 @@ const MainPage = () => {
 
     useEffect(() => {
         httpObtenerTODOsAsyncAwait()
-        httpObtenerCategoriasAsyncAwait()
+        //httpObtenerCategoriasAsyncAwait()
     }, [])
 
     const agregarTODO = async (texto : string) => {

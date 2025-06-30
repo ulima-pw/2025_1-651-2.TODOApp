@@ -6,14 +6,30 @@ import Titulo from "../components/Titulo"
 
 const URL = "http://localhost:5000"
 
+export interface Category {
+    id: number
+    name: string
+}
+
 const MainPage = () => {
     const [listaTODOs, setListaTODOs  ] = useState<TODO[]>([])
+    const [categories, setCategories] = useState<Category[]>([])
 
     const httpObtenerTODOsAsyncAwait = async () => {
         try {
             const resp = await fetch(`${URL}/todos`)
             const data = await resp.json()
             setListaTODOs(data)
+        }catch(error) {
+            console.error(error)
+        }
+    }
+
+    const httpObtenerCategoriasAsyncAwait = async () => {
+        try {
+            const resp = await fetch(`${URL}/categories`)
+            const data = await resp.json()
+            setCategories(data)
         }catch(error) {
             console.error(error)
         }
@@ -32,6 +48,7 @@ const MainPage = () => {
 
     useEffect(() => {
         httpObtenerTODOsAsyncAwait()
+        httpObtenerCategoriasAsyncAwait()
     }, [])
 
     const agregarTODO = async (texto : string) => {
@@ -44,7 +61,7 @@ const MainPage = () => {
     return <div className="container">
         <Titulo texto="TODO App" pagina={ Pagina.Main }/>
         <Navegacion pagina={ Pagina.Main } />
-        <Formulario agregar={ agregarTODO }/>
+        <Formulario agregar={ agregarTODO } categories={ categories }/>
         <ListaTODOs todos={ listaTODOs } 
             esHistorico={ false }/>
     </div>

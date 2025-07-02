@@ -8,7 +8,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename='/2025_1-651-2.TODOApp'>
       <Routes>
         <Route path='/' element={ <LoginPage /> } />
         <Route path='/main' element={ <MainPage /> } />

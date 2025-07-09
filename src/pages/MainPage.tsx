@@ -4,7 +4,6 @@ import ListaTODOs, { type TODO } from "../components/ListaTODOs"
 import Navegacion, { Pagina } from "../components/Navegacion"
 import Titulo from "../components/Titulo"
 import { useNavigate } from "react-router-dom"
-import { URL_BACKEND } from "../config"
 
 export interface Category {
     id: number
@@ -25,7 +24,7 @@ const MainPage = () => {
 
         const usuario = JSON.parse(sessionStorage.getItem("USUARIO")!)
         try {
-            const resp = await fetch(`${URL_BACKEND}/todos`,{
+            const resp = await fetch(`${import.meta.env.VITE_BACKEND_URL}/todos`,{
                 headers : {
                     "usuarioid" : usuario.id
                 }
@@ -46,7 +45,7 @@ const MainPage = () => {
         const usuario = JSON.parse(sessionStorage.getItem("USUARIO")!)
 
         try {
-            const resp = await fetch(`${URL_BACKEND}/categorias`, {
+            const resp = await fetch(`${import.meta.env.VITE_BACKEND_URL}/categorias`, {
                 headers : {
                     "usuarioid" : usuario.id
                 }
@@ -59,7 +58,7 @@ const MainPage = () => {
     }
 
     const httpGuardarTODO = async (todo : TODO) => {
-        const resp = await fetch(`${URL_BACKEND}/todos`, {
+        const resp = await fetch(`${import.meta.env.VITE_BACKEND_URL}/todos`, {
             method : "post",
             body : JSON.stringify(todo),
             headers : {

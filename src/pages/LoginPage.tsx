@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { URL_BACKEND } from "../config"
 
 const LoginPage = () => {
     const [username, setUsername] = useState("")
@@ -11,7 +10,7 @@ const LoginPage = () => {
 
     // Define (do not implement) the function to make the HTTP login request
     const loginRequest = async (username: string, password: string) => {
-        const resp = await fetch(`${URL_BACKEND}/usuarios/login`, {
+        const resp = await fetch(`${import.meta.env.VITE_BACKEND_URL}/usuarios/login`, {
             method : "POST",
             headers : {
                 "content-type" : "application/json"

@@ -1,9 +1,9 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import MainPage from './pages/MainPage'
-import HistoricoPage from './pages/HistoricoPage'
-import LoginPage from './pages/LoginPage'
+import MainPage from './views/pages/MainPage'
+import HistoricoPage from './views/pages/HistoricoPage'
+import LoginPage from './views/pages/LoginPage'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 
 createRoot(document.getElementById('root')!).render(

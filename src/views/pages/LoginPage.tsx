@@ -2,7 +2,7 @@ import useLoginViewModel from "../../viewmodels/useLoginViewModel"
 
 const LoginPage = () => {
     const {username, setUsername, password, 
-        setPassword, error, setError, loginRequest
+        setPassword, error,  loginRequest
     } = useLoginViewModel()
 
     return (
